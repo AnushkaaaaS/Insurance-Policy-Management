@@ -188,17 +188,20 @@ const errors: Record<string, string> = {};
 
       }
 
-      if (
-        Object.keys(errors).length > 0
-      ) {
+     if (Object.keys(errors).length > 0) {
 
-        res.status(400).json({
-          errors,
-        });
+  if (errors.pan) {
+    return res.status(400).json({
+      message:
+        "PAN is mandatory for policies with premium greater than ₹50,000. Please update the customer's PAN first.",
+    });
+  }
 
-        return;
+  return res.status(400).json({
+    errors,
+  });
 
-      }
+}
 
       const policy =
         await Policy.create({
