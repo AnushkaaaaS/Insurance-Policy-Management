@@ -203,7 +203,15 @@ admin@insurance.com
 Password:
 Admin@123
 ```
+# Dummy Agent Credentials
 
+```
+Email:
+john@gmail.com
+
+Password:
+John123
+```
 ---
 
 # Project Structure
