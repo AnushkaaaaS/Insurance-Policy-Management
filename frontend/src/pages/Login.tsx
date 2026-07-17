@@ -203,12 +203,7 @@ export default function Login() {
                     >
                       Password
                     </label>
-                    <a
-                      href="#"
-                      className="text-[12.5px] text-[#8593AC] transition hover:text-[#D9B978]"
-                    >
-                      Forgot password?
-                    </a>
+          
                   </div>
 
                   <div className="relative">

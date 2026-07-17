@@ -36,6 +36,7 @@ const maskCustomer = (customer: any) => ({
 const createCustomer = async (req: Request, res: Response) => {
   try {
     const { name, age, mobile, aadhaar, pan, nominee } = req.body;
+    const cleanedPAN = pan?.trim().toUpperCase();
 
     const errors: Record<string, string> = {};
 
@@ -55,13 +56,13 @@ const createCustomer = async (req: Request, res: Response) => {
       errors.mobile = "Mobile number already exists.";
     }
 
-    if (pan) {
-      const panExists = await Customer.findOne({ pan });
+if (cleanedPAN) {
+  const panExists = await Customer.findOne({ pan: cleanedPAN });
 
-      if (panExists) {
-        errors.pan = "PAN already exists.";
-      }
-    }
+  if (panExists) {
+    errors.pan = "PAN already exists.";
+  }
+}
 
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({
@@ -69,15 +70,20 @@ const createCustomer = async (req: Request, res: Response) => {
       });
     }
 
-    const customer = await Customer.create({
-      name,
-      age,
-      mobile,
-      aadhaar,
-      pan,
-      nominee,
-      agentId: req.user.id,
-    });
+const customerData: any = {
+  name,
+  age,
+  mobile,
+  aadhaar,
+  nominee,
+  agentId: req.user.id,
+};
+
+if (cleanedPAN) {
+  customerData.pan = cleanedPAN;
+}
+
+const customer = await Customer.create(customerData);
 
     res.status(201).json({
       message: "Customer Created Successfully",
@@ -227,6 +233,7 @@ const updateCustomer = async (req: Request, res: Response) => {
     }
 
     const { name, age, mobile, aadhaar, pan, nominee } = req.body;
+    const cleanedPAN = pan?.trim().toUpperCase();
 
     const customer = await Customer.findOne({
       _id: req.params.id,
@@ -263,16 +270,16 @@ const updateCustomer = async (req: Request, res: Response) => {
       errors.aadhaar = "Aadhaar already exists.";
     }
 
-    if (pan) {
-      const existingPAN = await Customer.findOne({
-        pan,
-        _id: { $ne: req.params.id },
-      });
+if (cleanedPAN) {
+  const existingPAN = await Customer.findOne({
+    pan: cleanedPAN,
+    _id: { $ne: req.params.id },
+  });
 
-      if (existingPAN) {
-        errors.pan = "PAN already exists.";
-      }
-    }
+  if (existingPAN) {
+    errors.pan = "PAN already exists.";
+  }
+}
 
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({
@@ -280,14 +287,17 @@ const updateCustomer = async (req: Request, res: Response) => {
       });
     }
 
-    Object.assign(customer, {
-      name,
-      age,
-      mobile,
-      aadhaar,
-      pan,
-      nominee,
-    });
+customer.name = name;
+customer.age = age;
+customer.mobile = mobile;
+customer.aadhaar = aadhaar;
+customer.nominee = nominee;
+
+if (cleanedPAN) {
+  customer.pan = cleanedPAN;
+} else {
+  customer.pan = undefined;
+}
 
     await customer.save();
 
