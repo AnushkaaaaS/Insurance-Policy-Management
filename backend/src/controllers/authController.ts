@@ -80,7 +80,7 @@ const logout = (req: Request, res: Response) => {
 
   res.clearCookie("token", {
     httpOnly: true,
-    sameSite: isProduction ? "none" : "lax",
+    sameSite:  "none",
     secure: isProduction,
   });
 
