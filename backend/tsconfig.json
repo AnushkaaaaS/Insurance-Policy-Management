@@ -6,12 +6,9 @@
     "outDir": "./dist",
 
     "strict": true,
-
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-
     "resolveJsonModule": true,
-
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
 
