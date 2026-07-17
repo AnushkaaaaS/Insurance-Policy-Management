@@ -158,14 +158,14 @@ export default function EditCustomerModal({
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
-                  className={`${fieldClass(errors[field as string])} ${
+                  className={`${fieldClass(errors[field])} ${
                     field === "pan" ? "uppercase" : ""
                   }`}
                 />
 
-                {errors[field as string] && (
+                {errors[field] && (
                   <p className="mt-1.5 text-[12.5px] text-[#B4482E]">
-                    {errors[field as string]}
+                    {errors[field]}
                   </p>
                 )}
               </div>

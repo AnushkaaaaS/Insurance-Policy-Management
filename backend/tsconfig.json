@@ -1,34 +1,31 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-
     "module": "CommonJS",
-
-    "rootDir": ".",
-
+    "rootDir": "./src",
     "outDir": "./dist",
 
     "strict": true,
 
     "esModuleInterop": true,
-
     "allowSyntheticDefaultImports": true,
 
     "resolveJsonModule": true,
 
     "skipLibCheck": true,
-
     "forceConsistentCasingInFileNames": true,
 
-    "types": [
-      "node",
-      "jest"
-    ]
+    "types": ["node"]
   },
 
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts",
     "src/types/**/*.d.ts"
+  ],
+
+  "exclude": [
+    "tests",
+    "dist",
+    "node_modules"
   ]
 }
